@@ -12,10 +12,11 @@ go generate -mod=vendor ./...
 
 echo ""
 echo "Windows amd64"
-GOOS=windows GOARCH=amd64 go build -mod=vendor -o dist/windows/amd64/${exe}.exe -ldflags "-s -w -H=windowsgui" $gocmd
+#GOOS=windows GOARCH=amd64 go build -mod=vendor -o dist/windows/amd64/${exe}.exe -ldflags "-s -w -H=windowsgui" $gocmd
+GOOS=windows GOARCH=amd64 go build -mod=vendor -o dist/windows/amd64/${exe}.exe -ldflags "-s -w" $gocmd
 GOOS=windows GOARCH=amd64 go build -mod=vendor -o dist/windows/amd64/${exe}.debug.exe
 echo "Windows 386"
-GOOS=windows GOARCH=386 go build -mod=vendor -o dist/windows/386/${exe}.exe -ldflags "-s -w -H=windowsgui" $gocmd
+GOOS=windows GOARCH=386 go build -mod=vendor -o dist/windows/386/${exe}.exe -ldflags "-s -w" $gocmd
 GOOS=windows GOARCH=386 go build -mod=vendor -o dist/windows/386/${exe}.debug.exe
 
 echo ""
