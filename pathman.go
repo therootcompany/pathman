@@ -1,3 +1,5 @@
+//go:generate go run -mod=vendor git.rootprojects.org/root/go-gitver
+
 package main
 
 import (
