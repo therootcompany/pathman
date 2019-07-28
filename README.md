@@ -34,22 +34,10 @@ Windows 10: [64-bit Download](https://rootprojects.org/pathman/dist/windows/amd6
 powershell.exe $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest https://rootprojects.org/pathman/dist/windows/amd64/pathman.exe -OutFile pathman.exe
 ```
 
-**Debug version**:
-
-```
-powershell.exe $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest https://rootprojects.org/pathman/dist/windows/amd64/pathman.debug.exe -OutFile pathman.debug.exe
-```
-
 Windows 7: [32-bit Download](https://rootprojects.org/pathman/dist/windows/386/pathman.exe)
 
 ```
 powershell.exe "(New-Object Net.WebClient).DownloadFile('https://rootprojects.org/pathman/dist/windows/386/pathman.exe', 'pathman.exe')"
-```
-
-**Debug version**:
-
-```
-powershell.exe "(New-Object Net.WebClient).DownloadFile('https://rootprojects.org/pathman/dist/windows/386/pathman.debug.exe', 'pathman.debug.exe')"
 ```
 
 </details>
