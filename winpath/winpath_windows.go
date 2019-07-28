@@ -29,12 +29,6 @@ func add(p string) (bool, error) {
 		return false, nil
 	}
 
-	k, err := registry.OpenKey(registry.CURRENT_USER, `Environment`, registry.SET_VALUE)
-	if err != nil {
-		return false, err
-	}
-	defer k.Close()
-
 	cur = append([]string{p}, cur...)
 	err = write(cur)
 	if nil != err {
@@ -63,7 +57,7 @@ func remove(p string) (bool, error) {
 		}
 	}
 
-	err = write(cur)
+	err = write(newpaths)
 	if nil != err {
 		return false, err
 	}
@@ -74,15 +68,15 @@ func remove(p string) (bool, error) {
 func write(cur []string) error {
 	// TODO --system to add to the system PATH rather than the user PATH
 
-	k, err := registry.OpenKey(registry.CURRENT_USER, `Environment`, registry.QUERY_VALUE)
+	k, err := registry.OpenKey(registry.CURRENT_USER, `Environment`, registry.SET_VALUE)
 	if err != nil {
-		return err
+		return fmt.Errorf("Can't open HKCU Environment for writes: %s", err)
 	}
 	defer k.Close()
 
 	err = k.SetStringValue(`Path`, strings.Join(cur, string(os.PathListSeparator)))
 	if nil != err {
-		return err
+		return fmt.Errorf("Can't set HKCU Environment[Path]: %s", err)
 	}
 
 	err = k.Close()
@@ -104,7 +98,7 @@ func paths() ([]string, error) {
 	// TBH, it's a mess to do this on *nix systems.
 	k, err := registry.OpenKey(registry.CURRENT_USER, `Environment`, registry.QUERY_VALUE)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Can't open HKCU Environment for reads: %s", err)
 	}
 	defer k.Close()
 
@@ -112,7 +106,7 @@ func paths() ([]string, error) {
 	// PATH, Path, path will all work.
 	s, _, err := k.GetStringValue("Path")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Can't query HKCU Environment[Path]: %s", err)
 	}
 
 	// ";" on Windows

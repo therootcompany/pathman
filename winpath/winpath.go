@@ -56,7 +56,7 @@ func NormalizePathEntry(pathentry string) (string, string) {
 	if strings.HasPrefix(strings.ToLower(absentry)+sep, strings.ToLower(home)+sep) {
 		// %USERPROFILE% is allowed, but only for user PATH
 		// https://superuser.com/a/442163/73857
-		homeentry = `%USERPROFILE%` + pathentry[len(home):]
+		homeentry = `%USERPROFILE%` + absentry[len(home):]
 	}
 
 	if absentry == pathentry {

@@ -69,10 +69,11 @@ func initializeShells(home string) error {
 
 	var hasRC bool
 	var nativeMatch *envConfig
+	shell := strings.TrimSuffix(filepath.Base(os.Getenv("SHELL")), ".exe")
 	for i := range confs {
 		c := confs[i]
 
-		if filepath.Base(os.Getenv("SHELL")) == c.shell {
+		if shell == c.shell {
 			nativeMatch = c
 		}
 
@@ -103,7 +104,7 @@ func initializeShells(home string) error {
 	}
 
 	// MacOS is special. It *requires* .bash_profile in order to read .bashrc
-	if "darwin" == runtime.GOOS && "bash" == os.Getenv("SHELL") {
+	if "darwin" == runtime.GOOS && "bash" == shell {
 		if err := ensureBashProfile(home); nil != err {
 			return err
 		}

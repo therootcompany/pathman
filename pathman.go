@@ -46,36 +46,10 @@ func main() {
 		entry = os.Args[2]
 	}
 
-	// https://superuser.com/a/69190/73857
-	// https://github.com/rust-lang-nursery/rustup.rs/issues/686#issuecomment-253982841
-	// exec source $HOME/.profile
-	shell := os.Getenv("SHELL")
-	shell = filepath.Base(shell)
-	switch shell {
-	case "":
-		if strings.HasSuffix(os.Getenv("COMSPEC"), "/cmd.exe") {
-			shell = "cmd"
-		}
-	case "fish":
-		// ignore
-	case "zsh":
-		// ignore
-	case "bash":
-		// ignore
-	default:
-		// warn and try anyway
-		fmt.Fprintf(
-			os.Stderr,
-			"%q isn't a recognized shell. Please open an issue at https://git.rootprojects.org/root/pathman/issues?q=%s",
-			shell,
-			shell,
-		)
-	}
-
 	home, _ := os.UserHomeDir()
 	if "" != entry && '~' == entry[0] {
 		// Let windows users not to have to type %USERPROFILE% or \Users\me every time
-		entry = strings.Replace(entry, "~", home, 0)
+		entry = strings.Replace(entry, "~", home, 1)
 	}
 	switch action {
 	default:
@@ -92,8 +66,10 @@ func main() {
 		}
 		list()
 	case "add":
+		checkShell()
 		add(entry)
 	case "remove":
+		checkShell()
 		remove(entry)
 	}
 }
@@ -157,7 +133,7 @@ func add(entry string) {
 
 	modified, err := addPath(entry)
 	if nil != err {
-		fmt.Fprintf(os.Stderr, "failed to add %q to PATH: %s", entry, err)
+		fmt.Fprintf(os.Stderr, "%sfailed to add %q to PATH: %s", pathstore, entry, err)
 		os.Exit(1)
 	}
 
@@ -223,6 +199,38 @@ func remove(entry string) {
 	fmt.Println(msg + "\n")
 }
 
+// warns if this is an unknown / untested shell
+func checkShell() {
+	// https://superuser.com/a/69190/73857
+	// https://github.com/rust-lang-nursery/rustup.rs/issues/686#issuecomment-253982841
+	// exec source $HOME/.profile
+	shellexe := filepath.Base(os.Getenv("SHELL"))
+	shell := strings.TrimSuffix(shellexe, ".exe")
+	switch shell {
+	case ".":
+		shell = ""
+		fallthrough
+	case "":
+		if strings.HasSuffix(os.Getenv("COMSPEC"), "\\cmd.exe") {
+			shell = "cmd"
+		}
+	case "fish":
+		// ignore
+	case "zsh":
+		// ignore
+	case "bash":
+		// ignore
+	default:
+		// warn and try anyway
+		fmt.Fprintf(
+			os.Stderr,
+			"%q isn't a recognized shell. Please open an issue at https://git.rootprojects.org/root/pathman/issues?q=%s\n",
+			shellexe,
+			shellexe,
+		)
+	}
+}
+
 // Paths returns path entries in the current environment
 func Paths() []string {
 	cur := os.Getenv("PATH")
@@ -242,7 +250,7 @@ func Paths() []string {
 // path entry to the current shell session
 func Add(p string) string {
 	if isCmdExe() {
-		return fmt.Sprintf(`PATH %s;%PATH%`, p)
+		return fmt.Sprintf(`PATH %s;%%PATH%%`, strings.Replace(p, "%", "%%", -1))
 	}
 	return fmt.Sprintf(`export PATH="%s:$PATH"`, p)
 }
@@ -257,5 +265,5 @@ func Remove(entries []string) string {
 }
 
 func isCmdExe() bool {
-	return "" == os.Getenv("SHELL") && strings.Contains(strings.ToLower(os.Getenv("COMSPEC")), "/cmd.exe")
+	return "" == os.Getenv("SHELL") && strings.HasSuffix(strings.ToLower(os.Getenv("COMSPEC")), "\\cmd.exe")
 }

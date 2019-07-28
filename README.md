@@ -6,6 +6,8 @@ Manage PATH on Windows, Mac, and Linux with various Shells
 pathman list
 pathman add ~/.local/bin
 pathman remove ~/.local/bin
+pathman version
+pathman help
 ```
 
 Windows: stores PATH in the registry.
@@ -109,7 +111,7 @@ curl https://rootprojects.org/pathman/dist/linux/armv5/pathman -o pathman
 ```
 mkdir %userprofile%\bin
 move pathman.exe %userprofile%\bin\pathman.exe
-%userprofile%\bin\pathman.exe ~\bin
+%userprofile%\bin\pathman.exe add ~\bin
 ```
 
 **All Others**

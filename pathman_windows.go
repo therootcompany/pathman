@@ -6,6 +6,8 @@ import (
 	"git.rootprojects.org/root/pathman/winpath"
 )
 
+var pathstore = "[winpath] "
+
 func addPath(p string) (bool, error) {
 	return winpath.Add(p)
 }

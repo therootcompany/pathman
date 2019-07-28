@@ -1,4 +1,4 @@
-// +build windows,unsafe
+// +build windows,!nounsafe
 
 package winpath
 

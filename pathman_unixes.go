@@ -6,6 +6,8 @@ import (
 	"git.rootprojects.org/root/pathman/envpath"
 )
 
+var pathstore = ""
+
 func addPath(p string) (bool, error) {
 	return envpath.Add(p)
 }
