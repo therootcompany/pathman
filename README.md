@@ -22,6 +22,7 @@ MacOS (darwin): [64-bit Download ](https://rootprojects.org/pathman/dist/darwin/
 
 ```
 curl https://rootprojects.org/pathman/dist/darwin/amd64/pathman -o pathman
+chmod +x ./pathman
 ```
 
 ### Windows
@@ -51,12 +52,14 @@ Linux (64-bit): [Download](https://rootprojects.org/pathman/dist/linux/amd64/pat
 
 ```
 curl https://rootprojects.org/pathman/dist/linux/amd64/pathman -o pathman
+chmod +x ./pathman
 ```
 
 Linux (32-bit): [Download](https://rootprojects.org/pathman/dist/linux/386/pathman)
 
 ```
 curl https://rootprojects.org/pathman/dist/linux/386/pathman -o pathman
+chmod +x ./pathman
 ```
 
 </details>
@@ -70,24 +73,28 @@ RPi 4 (64-bit armv8): [Download](https://rootprojects.org/pathman/dist/linux/arm
 
 ```
 curl https://rootprojects.org/pathman/dist/linux/armv8/pathman -o pathman`
+chmod +x ./pathman
 ```
 
 RPi 3 (armv7): [Download](https://rootprojects.org/pathman/dist/linux/armv7/pathman)
 
 ```
 curl https://rootprojects.org/pathman/dist/linux/armv7/pathman -o pathman
+chmod +x ./pathman
 ```
 
 ARMv6: [Download](https://rootprojects.org/pathman/dist/linux/armv6/pathman)
 
 ```
 curl https://rootprojects.org/pathman/dist/linux/armv6/pathman -o pathman
+chmod +x ./pathman
 ```
 
 RPi Zero (armv5): [Download](https://rootprojects.org/pathman/dist/linux/armv5/pathman)
 
 ```
 curl https://rootprojects.org/pathman/dist/linux/armv5/pathman -o pathman
+chmod +x ./pathman
 ```
 
 </details>
@@ -96,7 +103,7 @@ curl https://rootprojects.org/pathman/dist/linux/armv5/pathman -o pathman
 
 **Windows**
 
-```
+```cmd
 mkdir %userprofile%\bin
 move pathman.exe %userprofile%\bin\pathman.exe
 %userprofile%\bin\pathman.exe add ~\bin
@@ -104,8 +111,7 @@ move pathman.exe %userprofile%\bin\pathman.exe
 
 **All Others**
 
-```
-chmod a+x ./pathman
+```bash
 mkdir -p ~/.local/bin
 mv ./pathman ~/.local/bin
 pathman add ~/.local/bin
