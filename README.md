@@ -12,6 +12,115 @@ Windows: stores PATH in the registry.
 
 Mac & Linux: stores PATH in `~/.config/envman/PATH.sh`
 
+## Downloads
+
+### MacOS
+
+MacOS (darwin): [64-bit Download ](https://rootprojects.org/pathman/dist/darwin/amd64/pathman)
+
+```
+curl https://rootprojects.org/pathman/dist/darwin/amd64/pathman -o pathman
+```
+
+### Windows
+
+<details>
+<summary>See download options</summary>
+Windows 10: [64-bit Download](https://rootprojects.org/pathman/dist/windows/amd64/pathman.exe)
+
+```
+powershell.exe $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest https://rootprojects.org/pathman/dist/windows/amd64/pathman.exe -OutFile pathman.exe
+```
+
+**Debug version**:
+
+```
+powershell.exe $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest https://rootprojects.org/pathman/dist/windows/amd64/pathman.debug.exe -OutFile pathman.debug.exe
+```
+
+Windows 7: [32-bit Download](https://rootprojects.org/pathman/dist/windows/386/pathman.exe)
+
+```
+powershell.exe "(New-Object Net.WebClient).DownloadFile('https://rootprojects.org/pathman/dist/windows/386/pathman.exe', 'pathman.exe')"
+```
+
+**Debug version**:
+
+```
+powershell.exe "(New-Object Net.WebClient).DownloadFile('https://rootprojects.org/pathman/dist/windows/386/pathman.debug.exe', 'pathman.debug.exe')"
+```
+
+</details>
+
+### Linux
+
+<details>
+<summary>See download options</summary>
+
+Linux (64-bit): [Download](https://rootprojects.org/pathman/dist/linux/amd64/pathman)
+
+```
+curl https://rootprojects.org/pathman/dist/linux/amd64/pathman -o pathman
+```
+
+Linux (32-bit): [Download](https://rootprojects.org/pathman/dist/linux/386/pathman)
+
+```
+curl https://rootprojects.org/pathman/dist/linux/386/pathman -o pathman
+```
+
+</details>
+
+### Raspberry Pi (Linux ARM)
+
+<details>
+<summary>See download options</summary>
+
+RPi 4 (64-bit armv8): [Download](https://rootprojects.org/pathman/dist/linux/armv8/pathman)
+
+```
+curl https://rootprojects.org/pathman/dist/linux/armv8/pathman -o pathman`
+```
+
+RPi 3 (armv7): [Download](https://rootprojects.org/pathman/dist/linux/armv7/pathman)
+
+```
+curl https://rootprojects.org/pathman/dist/linux/armv7/pathman -o pathman
+```
+
+ARMv6: [Download](https://rootprojects.org/pathman/dist/linux/armv6/pathman)
+
+```
+curl https://rootprojects.org/pathman/dist/linux/armv6/pathman -o pathman
+```
+
+RPi Zero (armv5): [Download](https://rootprojects.org/pathman/dist/linux/armv5/pathman)
+
+```
+curl https://rootprojects.org/pathman/dist/linux/armv5/pathman -o pathman
+```
+
+</details>
+
+### Add to PATH
+
+**Windows**
+
+```
+mkdir %userprofile%\bin
+move pathman.exe %userprofile%\bin\pathman.exe
+%userprofile%\bin\pathman.exe ~\bin
+```
+
+**All Others**
+
+```
+chmod a+x ./pathman
+mkdir -p ~/.local/bin
+mv ./pathman ~/.local/bin
+pathman add ~/.local/bin
+```
+
 # add
 
 ```bash
