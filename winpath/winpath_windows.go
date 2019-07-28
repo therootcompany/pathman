@@ -50,7 +50,7 @@ func remove(p string) (bool, error) {
 		return false, err
 	}
 
-	index := findMatch(cur, p)
+	index := IndexOf(cur, p)
 	// skip silently, successfully
 	if index < 0 {
 		return false, nil

@@ -5,13 +5,24 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
+// GitRev is the git commit hash of the build
+var GitRev = "000000000"
+
+// GitVersion is the git description converted to semver
+var GitVersion = "v0.5.2-pre+dirty"
+
+// GitTimestamp is the timestamp of the latest commit
+var GitTimestamp = time.Now().Format(time.RFC3339)
+
 func usage() {
-	fmt.Fprintf(os.Stdout, "Usage: envpath <action> [path]\n")
-	fmt.Fprintf(os.Stdout, "\tex: envpath list\n")
-	fmt.Fprintf(os.Stdout, "\tex: envpath add ~/.local/bin\n")
-	fmt.Fprintf(os.Stdout, "\tex: envpath remove ~/.local/bin\n")
+	fmt.Fprintf(os.Stdout, "Usage: pathman <action> [path]\n")
+	fmt.Fprintf(os.Stdout, "\tex: pathman list\n")
+	fmt.Fprintf(os.Stdout, "\tex: pathman add ~/.local/bin\n")
+	fmt.Fprintf(os.Stdout, "\tex: pathman remove ~/.local/bin\n")
+	fmt.Fprintf(os.Stdout, "\tex: pathman version\n")
 }
 
 func main() {
@@ -29,7 +40,7 @@ func main() {
 	}
 
 	action = os.Args[1]
-	if 2 == len(os.Args) {
+	if 3 == len(os.Args) {
 		entry = os.Args[2]
 	}
 
@@ -37,6 +48,7 @@ func main() {
 	// https://github.com/rust-lang-nursery/rustup.rs/issues/686#issuecomment-253982841
 	// exec source $HOME/.profile
 	shell := os.Getenv("SHELL")
+	shell = filepath.Base(shell)
 	switch shell {
 	case "":
 		if strings.HasSuffix(os.Getenv("COMSPEC"), "/cmd.exe") {
@@ -52,15 +64,27 @@ func main() {
 		// warn and try anyway
 		fmt.Fprintf(
 			os.Stderr,
-			"%q isn't a recognized shell. Please open an issue at https://git.rootprojects.org/envpath/issues?q=%s",
+			"%q isn't a recognized shell. Please open an issue at https://git.rootprojects.org/root/pathman/issues?q=%s",
 			shell,
 			shell,
 		)
 	}
 
+	home, _ := os.UserHomeDir()
+	if "" != entry && '~' == entry[0] {
+		// Let windows users not to have to type %USERPROFILE% or \Users\me every time
+		entry = strings.Replace(entry, "~", home, 0)
+	}
 	switch action {
+	default:
+		usage()
+		os.Exit(1)
+	case "version":
+		fmt.Printf("pathman %s (%s) %s\n", GitVersion, GitRev, GitTimestamp)
+		os.Exit(0)
+		return
 	case "list":
-		if 2 == len(os.Args) {
+		if 2 != len(os.Args) {
 			usage()
 			os.Exit(1)
 		}
@@ -91,18 +115,24 @@ func list() {
 	fmt.Println("other PATH entries:\n")
 	// All managed paths
 	pathsmap := map[string]bool{}
+	home, _ := os.UserHomeDir()
 	for i := range managedpaths {
-		// TODO normalize
 		pathsmap[managedpaths[i]] = true
 	}
 
 	// Paths in the environment which are not managed
 	var hasExtras bool
-	envpaths := Paths()
-	for i := range envpaths {
+	paths := Paths()
+	for i := range paths {
 		// TODO normalize
-		path := envpaths[i]
-		if !pathsmap[path] {
+		path := paths[i]
+		path1 := ""
+		path2 := ""
+		if strings.HasPrefix(path, home) {
+			path1 = "$HOME" + strings.TrimPrefix(path, home)
+			path2 = "%USERPROFILE%" + strings.TrimPrefix(path, home)
+		}
+		if !pathsmap[path] && !pathsmap[path1] && !pathsmap[path2] {
 			hasExtras = true
 			fmt.Println("\t" + path)
 		}
@@ -185,7 +215,7 @@ func remove(entry string) {
 			fmt.Fprintf(os.Stderr, "%s", err)
 		}
 
-		msg += " To set the PATH immediately, update the current session:\n\n\t" + Remove(entry) + "\n"
+		msg += " To set the PATH immediately, update the current session:\n\n\t" + Remove(newpaths) + "\n"
 	}
 
 	fmt.Println(msg + "\n")
@@ -224,6 +254,6 @@ func Remove(entries []string) string {
 	return fmt.Sprintf(`export PATH="%s"`, strings.Join(entries, ":"))
 }
 
-func isCmdExe() {
+func isCmdExe() bool {
 	return "" == os.Getenv("SHELL") && strings.Contains(strings.ToLower(os.Getenv("COMSPEC")), "/cmd.exe")
 }

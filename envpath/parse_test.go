@@ -35,17 +35,16 @@ PATH=""
 
 `
 
-var paths = []string{
-	`PATH="/foo"`,
-	`PATH="/foo:$PATH"`,
-	`PATH=""`,
-	`PATH="/boo:$PATH"`,
-}
-
 func TestParse(t *testing.T) {
+	exppaths := []string{
+		`PATH="/foo"`,
+		`PATH="/foo:$PATH"`,
+		`PATH=""`,
+		`PATH="/boo:$PATH"`,
+	}
 	newlines, warnings := Parse([]byte(file), "PATH")
 	newfile := `PATH="` + strings.Join(newlines, "\"\n\tPATH=\"") + `"`
-	expfile := strings.Join(paths, "\n\t")
+	expfile := strings.Join(exppaths, "\n\t")
 	if newfile != expfile {
 		t.Errorf("\nExpected:\n\t%s\nGot:\n\t%s", expfile, newfile)
 	}

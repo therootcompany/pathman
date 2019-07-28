@@ -72,7 +72,7 @@ func initializeShells(home string) error {
 	for i := range confs {
 		c := confs[i]
 
-		if os.Getenv("SHELL") == c.shell {
+		if filepath.Base(os.Getenv("SHELL")) == c.shell {
 			nativeMatch = c
 		}
 
@@ -181,7 +181,7 @@ func (c *envConfig) initializeShell() (bool, error) {
 	}
 
 	// Generate our script
-	script := fmt.Sprintf("# Generated for envpath. Do not edit.\n%s\n", c.rcScript)
+	script := fmt.Sprintf("# Generated for envman. Do not edit.\n%s\n", c.rcScript)
 
 	// If there's not a newline before our template,
 	// include it in the template. We want nice things.
@@ -212,7 +212,7 @@ func (c *envConfig) ensurePathsLoader() error {
 		// TODO maybe don't write every time
 		if err := ioutil.WriteFile(
 			loadFile,
-			[]byte(fmt.Sprintf("# Generated for envpath. Do not edit.\n%s\n", c.loadScript)),
+			[]byte(fmt.Sprintf("# Generated for envman. Do not edit.\n%s\n", c.loadScript)),
 			os.FileMode(0755),
 		); nil != err {
 			return err

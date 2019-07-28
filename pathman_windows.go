@@ -15,7 +15,7 @@ func removePath(p string) (bool, error) {
 }
 
 func listPaths() ([]string, error) {
-	return winpath.List()
+	return winpath.Paths()
 }
 
 func indexOfPath(cur []string, p string) int {

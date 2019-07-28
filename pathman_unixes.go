@@ -1,4 +1,4 @@
-// +build windows
+// +build !windows
 
 package main
 
@@ -15,7 +15,7 @@ func removePath(p string) (bool, error) {
 }
 
 func listPaths() ([]string, error) {
-	return envpath.List()
+	return envpath.Paths()
 }
 
 func indexOfPath(cur []string, p string) int {

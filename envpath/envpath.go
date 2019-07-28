@@ -48,12 +48,12 @@ func Add(entry string) (bool, error) {
 		return false, err
 	}
 
-	_, ok := isInPath(home, paths, pathentry)
-	if ok {
+	index := IndexOf(paths, pathentry)
+	if index >= 0 {
 		return false, nil
 	}
 
-	paths = append([]string{pathentry}, paths...)
+	paths = append(paths, pathentry)
 	err = writeEnv(fullpath, paths)
 	if nil != err {
 		return false, err
@@ -86,8 +86,8 @@ func Remove(entry string) (bool, error) {
 		return false, err
 	}
 
-	index, exists := isInPath(home, oldpaths, pathentry)
-	if !exists {
+	index := IndexOf(oldpaths, pathentry)
+	if index < 0 {
 		return false, nil
 	}
 
@@ -119,7 +119,8 @@ func getEnv(home string, env string) (string, []string, error) {
 		return "", nil, err
 	}
 
-	filename := fmt.Sprintf("00-%s.env", env)
+	//filename := fmt.Sprintf("00-%s.env", env)
+	filename := fmt.Sprintf("%s.env", env)
 	for i := range nodes {
 		name := nodes[i].Name()
 		if fmt.Sprintf("%s.env", env) == name || strings.HasSuffix(name, fmt.Sprintf("-%s.env", env)) {
@@ -188,19 +189,24 @@ func writeEnv(fullpath string, paths []string) error {
 	return f.Close()
 }
 
-func isInPath(home string, paths []string, pathentry string) (int, bool) {
+// IndexOf searches the given path list for first occurence
+// of the given path entry and returns the index, or -1
+func IndexOf(paths []string, p string) int {
+	home, err := os.UserHomeDir()
+	if nil != err {
+		panic(err)
+	}
+
+	p, _ = normalizePathEntry(home, p)
 	index := -1
 	for i := range paths {
 		entry, _ := normalizePathEntry(home, paths[i])
-		if pathentry == entry {
+		if p == entry {
 			index = i
 			break
 		}
 	}
-	if index >= 0 {
-		return index, true
-	}
-	return -1, false
+	return index
 }
 
 func normalizePathEntry(home, pathentry string) (string, error) {
