@@ -12,7 +12,7 @@ type Warning struct {
 }
 
 // Parse will return a list of paths from an export file
-func Parse(envname string, b []byte) ([]string, []Warning) {
+func Parse(b []byte, envname string) ([]string, []Warning) {
 	s := string(b)
 	s = strings.Replace(s, "\r\n", "\n", -1)
 

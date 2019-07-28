@@ -43,7 +43,7 @@ var paths = []string{
 }
 
 func TestParse(t *testing.T) {
-	newlines, warnings := Parse("PATH", []byte(file))
+	newlines, warnings := Parse([]byte(file), "PATH")
 	newfile := `PATH="` + strings.Join(newlines, "\"\n\tPATH=\"") + `"`
 	expfile := strings.Join(paths, "\n\t")
 	if newfile != expfile {
