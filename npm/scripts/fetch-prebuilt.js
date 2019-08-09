@@ -221,10 +221,6 @@ function winstall(pkgname, name, bindir) {
 	// because bugs in npm + git bash oddities, of course
 	// https://npm.community/t/globally-installed-package-does-not-execute-in-git-bash-on-windows/9394
 	try {
-		console.log(
-			'try local path',
-			path.join(__dirname, dd + '../../.bin', name)
-		);
 		fs.writeFileSync(
 			path.join(__dirname, dd + '../../.bin', name),
 			[
@@ -239,10 +235,6 @@ function winstall(pkgname, name, bindir) {
 		// ignore
 	}
 	try {
-		console.log(
-			'try global path',
-			path.join(__dirname, dd + '../../..', name)
-		);
 		fs.writeFileSync(
 			path.join(__dirname, dd + '../../..', name),
 			[

@@ -1,6 +1,6 @@
 {
 	"name": "@root/pathman",
-	"version": "0.5.2",
+	"version": "0.5.3-pre.1",
 	"description": "A cross-platform PATH manager",
 	"main": "index.js",
 	"homepage": "https://git.rootprojects.org/root/pathman/src/branch/master/npm",
