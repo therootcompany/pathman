@@ -1,0 +1,39 @@
+{
+	"name": "@root/pathman",
+	"version": "0.5.2",
+	"description": "A cross-platform PATH manager",
+	"main": "index.js",
+	"homepage": "https://git.rootprojects.org/root/pathman/src/branch/master/npm",
+	"files": [
+		"bin/",
+		"scripts/"
+	],
+	"bin": {
+		"pathman": "bin/pathman"
+	},
+	"scripts": {
+		"pathman": "pathman",
+		"postinstall": "node scripts/fetch-prebuilt.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://git.rootprojects.org/root/pathman.git"
+	},
+	"keywords": [
+		"launchd",
+		"systemd",
+		"winsvc",
+		"launchctl",
+		"systemctl",
+		"HKEY_CURRENT_USER",
+		"HKCU",
+		"Run"
+	],
+	"author": "AJ ONeal <coolaj86@gmail.com> (https://coolaj86.com/)",
+	"license": "MPL-2.0",
+	"dependencies": {
+		"@root/mkdirp": "^1.0.0",
+		"@root/request": "^1.3.11"
+	}
+}
