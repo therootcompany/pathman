@@ -8,7 +8,7 @@ var ext = /^win/i.test(os.platform()) ? '.exe' : '';
 
 // @scope/packagename => packagename
 // { bin: { "packagename": "bin/runner" } } => "bin/runner"
-var bin = pkg.bin[pkg.name.replace(/.*\//, '')];
+var bin = path.resolve(__dirname, '..', pkg.bin[pkg.name.replace(/.*\//, '')]);
 
 function spawner(args) {
 	return new Promise(function(resolve, reject) {
