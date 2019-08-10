@@ -19,7 +19,7 @@ function spawner(args) {
 			console.info(chunk.toString('utf8'));
 		});
 		runner.stderr.on('data', function(chunk) {
-			console.err(chunk.toString('utf8'));
+			console.error(chunk.toString('utf8'));
 		});
 		runner.on('exit', function(code) {
 			if (0 !== code) {
