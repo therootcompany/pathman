@@ -14,6 +14,27 @@ Windows: stores PATH in the registry.
 
 Mac & Linux: stores PATH in `~/.config/envman/PATH.sh`
 
+## Install
+
+1. [Download](#user-content-downloads)
+2. Add to `PATH`
+
+#### Windows
+
+```cmd
+mkdir %userprofile%\bin
+move pathman.exe %userprofile%\bin\pathman.exe
+%userprofile%\bin\pathman.exe add ~\bin
+```
+
+#### Mac, Linux, etc
+
+```bash
+mkdir -p ~/.local/bin
+mv ./pathman ~/.local/bin
+pathman add ~/.local/bin
+```
+
 ## Downloads
 
 ### MacOS
@@ -99,28 +120,7 @@ chmod +x ./pathman
 
 </details>
 
-## Install
-
-1. Download (see below)
-2. Add to `PATH`
-
-**Windows**
-
-```cmd
-mkdir %userprofile%\bin
-move pathman.exe %userprofile%\bin\pathman.exe
-%userprofile%\bin\pathman.exe add ~\bin
-```
-
-**Mac, Linux, etc**
-
-```bash
-mkdir -p ~/.local/bin
-mv ./pathman ~/.local/bin
-pathman add ~/.local/bin
-```
-
-# CLI / API
+# CLI Help (API)
 
 # add
 
