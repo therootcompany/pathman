@@ -99,7 +99,7 @@ chmod +x ./pathman
 
 </details>
 
-### Add to PATH
+## Install (Add to PATH)
 
 **Windows**
 
