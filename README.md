@@ -19,6 +19,12 @@ Mac & Linux: stores PATH in `~/.config/envman/PATH.sh`
 1. [Download](#downloads)
 2. Add to `PATH`
 
+Or install via `npm`:
+
+```bash
+npm install -g pathman
+```
+
 #### Windows
 
 ```cmd
