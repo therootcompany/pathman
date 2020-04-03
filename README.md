@@ -16,7 +16,7 @@ Mac & Linux: stores PATH in `~/.config/envman/PATH.sh`
 
 ## Install
 
-1. [Download](#user-content-downloads)
+1. [Download](#downloads)
 2. Add to `PATH`
 
 #### Windows
