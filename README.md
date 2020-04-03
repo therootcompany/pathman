@@ -99,7 +99,10 @@ chmod +x ./pathman
 
 </details>
 
-## Install (Add to PATH)
+## Install
+
+1. Download (see below)
+2. Add to `PATH`
 
 **Windows**
 
@@ -109,13 +112,15 @@ move pathman.exe %userprofile%\bin\pathman.exe
 %userprofile%\bin\pathman.exe add ~\bin
 ```
 
-**All Others**
+**Mac, Linux, etc**
 
 ```bash
 mkdir -p ~/.local/bin
 mv ./pathman ~/.local/bin
 pathman add ~/.local/bin
 ```
+
+# CLI / API
 
 # add
 
