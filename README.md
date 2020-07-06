@@ -1,6 +1,6 @@
 # [pathman](https://git.rootprojects.org/root/pathman)
 
-Manage PATH on Windows, Mac, and Linux with various Shells
+Manage PATH on **Windows 10**, **Mac**, and **Linux** with various Shells
 
 ```bash
 pathman list
@@ -10,11 +10,33 @@ pathman version
 pathman help
 ```
 
-Windows: stores PATH in the registry.
+Where is the PATH managed?
 
-Mac & Linux: stores PATH in `~/.config/envman/PATH.sh`
+- **Windows 10**: stores `PATH` in the registry.
+- **Mac** & **Linux**: stores `PATH` in `~/.config/envman/PATH.env`
+
+Note for **Windows 10** users: due to differences in how `cmd.exe`, PowerShell, and `pathman` use and interpret strings, spaces, paths, and variables, you'll get more consistent results if you:
+
+- Use `~` rather than `%USERPROFILE%` or `$Env:USERPROFILE`
+- Use `/` rather than `\` for delimiting paths
 
 ## Install
+
+**Mac**, **Linux**:
+
+```bash
+curl -s https://webinstall.dev/pathman | bash
+```
+
+**Windows 10**:
+
+This can be run from `cmd.exe` or PowerShell (`curl.exe` is a native part of Windows 10).
+
+```bash
+curl.exe -sA "MS" https://webinstall.dev/pathman | powershell
+```
+
+### Manual Install
 
 1. [Download](#downloads)
 2. Add to `PATH`
@@ -30,7 +52,7 @@ npm install -g pathman
 ```cmd
 mkdir %userprofile%\bin
 move pathman.exe %userprofile%\bin\pathman.exe
-%userprofile%\bin\pathman.exe add ~\bin
+%userprofile%\bin\pathman.exe add ~/bin
 ```
 
 #### Mac, Linux, etc
