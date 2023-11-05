@@ -6,7 +6,9 @@ set -u
 #     building for macOS on macOS seems to yield smaller sizes
 
 # TODO use the git log describe thing
-my_version="0.6.0"
+my_version="$(
+    git describe --tags
+)"
 export GOOS="windows"
 
 fn_package() { (

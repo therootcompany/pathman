@@ -5,8 +5,9 @@ set -u
 # NOTE
 #     building for macOS on macOS seems to yield smaller sizes
 
-# TODO use the git log describe thing
-my_version="0.6.0"
+my_version="$(
+    git describe --tags
+)"
 export GOOS="darwin"
 
 fn_package() { (
@@ -18,7 +19,7 @@ fn_package() { (
         my_arch="${GOARCH}"
     fi
 
-    my_bin="pathman-v${my_version}-${GOOS}-${my_arch}"
+    my_bin="pathman-${my_version}-${GOOS}-${my_arch}"
     tinygo build -no-debug -o "${my_bin}"
     strip "${my_bin}" || true
 
