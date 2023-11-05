@@ -17,7 +17,7 @@ function fn_package() {
     tinygo build -no-debug -o "${my_bin}"
     #strip "${my_bin}" || true
 
-    tar cvzf "$my_bin.tar" "$my_bin"
+    tar cvzf "$my_bin.tar.gz" "$my_bin"
     Compress-Archive "$my_bin" "$my_bin.zip"
 
     Write-Output "$my_bin.zip"
