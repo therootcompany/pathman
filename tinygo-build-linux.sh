@@ -31,6 +31,8 @@ fn_package() { (
     echo "$my_bin.tar.xz"
 ); }
 
+go generate ./...
+
 export GOAMD64=v1
 export GOARCH=amd64
 fn_package

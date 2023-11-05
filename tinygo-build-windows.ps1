@@ -21,7 +21,9 @@ function fn_package() {
     Compress-Archive "$my_bin" "$my_bin.zip"
 
     Write-Output "$my_bin.zip"
- }
+}
+
+go generate ./...
 
 $Env:GOAMD64 = "v1"
 $Env:GOARCH = "amd64"
